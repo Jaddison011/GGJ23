@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Floor
+  - Battery
+  - Tutorial2
+  - Power
+  - Checkpoint1
+  - Checkpoint2
+  - Checkpoint3
+  - Lava
+  - Checkpoint4
+  - Checkpoint5
+  - Checkpoint6
+  - Checkpoint7
+  - Checkpoint8
+  - CrateButton
+  - Crate
+  - BothButton
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Background
+    uniqueID: 385901761
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 2357615863
+    locked: 0
+  - name: FrontObjects
+    uniqueID: 754619829
+    locked: 0
