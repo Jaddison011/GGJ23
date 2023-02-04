@@ -11,6 +11,10 @@ using System.Collections;
      public float buttonTime = 0.5f;
      public float jumpHeight = 5;
      bool isGrounded = true;
+     bool onRoot = false;
+
+     public Root root;
+     public GameObject pivot;
 
     //  public Animator animator;
      private SpriteRenderer spriteRenderer;
@@ -61,6 +65,21 @@ using System.Collections;
         if (Input.GetKeyDown(KeyCode.Escape)) {
             FindObjectOfType<GameManager>().Pause();
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !onRoot) {
+            onRoot = true;
+            pivot.GetComponent<Transform>().position = Camera.main.ScreenToWorldPoint(Input.mousePosition);;
+            root.enable(transform.position, pivot.GetComponent<Transform>().position);
+            root.SetPivot(pivot);
+            pivot.GetComponent<DistanceJoint2D>().enabled = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && onRoot) {
+            onRoot = false;
+            root.disable();
+            pivot.GetComponent<DistanceJoint2D>().enabled = false;
+        }
+
      }
 
     void OnCollisionEnter2D(Collision2D collision) {
