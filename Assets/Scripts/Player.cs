@@ -83,14 +83,10 @@ using System.Collections;
 
 
     void OnTriggerEnter2D(Collider2D collision) {
-        Debug.Log("enter");     
-        Debug.Log("Ground");
         isGrounded = true;
     }
 
     void OnTriggerExit2D(Collider2D collision) {
-        Debug.Log("Exit");
-        Debug.Log("Air");
         isGrounded = false;
     }
 
