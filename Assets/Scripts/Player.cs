@@ -15,6 +15,8 @@ using System.Collections;
 
      public Root root;
      public GameObject pivot;
+     public PlatformScript platforms;
+     public bool hoveredOver = false;
 
     //  public Animator animator;
      private SpriteRenderer spriteRenderer;
@@ -66,9 +68,9 @@ using System.Collections;
             FindObjectOfType<GameManager>().Pause();
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !onRoot) {
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !onRoot && hoveredOver) {
             onRoot = true;
-            pivot.GetComponent<Transform>().position = Camera.main.ScreenToWorldPoint(Input.mousePosition);;
+            pivot.GetComponent<Transform>().position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             root.enable(transform.position, pivot.GetComponent<Transform>().position);
             root.SetPivot(pivot);
             pivot.GetComponent<DistanceJoint2D>().enabled = true;
@@ -113,5 +115,9 @@ using System.Collections;
         // spriteRenderer = GetComponent<SpriteRenderer>();
         // animator.SetBool("Jumping", false);
         // animator.SetBool("Moving", false);
+    }
+
+    public void SetHovering(bool hovering) {
+        hoveredOver = hovering;
     }
  }
