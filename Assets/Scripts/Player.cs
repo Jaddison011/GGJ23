@@ -68,18 +68,19 @@ using System.Collections;
             FindObjectOfType<GameManager>().Pause();
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !onRoot && hoveredOver) {
-            onRoot = true;
-            pivot.GetComponent<Transform>().position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            root.enable(transform.position, pivot.GetComponent<Transform>().position);
-            root.SetPivot(pivot);
-            pivot.GetComponent<DistanceJoint2D>().enabled = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Mouse1) && onRoot) {
-            onRoot = false;
-            root.disable();
-            pivot.GetComponent<DistanceJoint2D>().enabled = false;
+        if (Input.GetKeyDown(KeyCode.Mouse0)) {
+            if (hoveredOver) {
+                onRoot = true;
+                pivot.GetComponent<Transform>().position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                root.enable(transform.position, pivot.GetComponent<Transform>().position);
+                root.SetPivot(pivot);
+                pivot.GetComponent<DistanceJoint2D>().enabled = true;
+            } else {
+                onRoot = false;
+                root.disable();
+                pivot.GetComponent<DistanceJoint2D>().enabled = false;
+            }
+            
         }
 
      }
