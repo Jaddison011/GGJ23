@@ -21,6 +21,8 @@ using System.Collections;
 
      public Animator animator;
      private SpriteRenderer spriteRenderer;
+     private Camera cam;
+     [SerializeField] public LayerMask layer;
 
 
     //  public AudioSource walk1;
@@ -39,10 +41,6 @@ using System.Collections;
      }
 
      private void Update() {
-        if (jumping) {
-            Debug.Log(jumping);
-        }
-
         if(moveDirection.x != 0) {
             animator.SetBool("Moving", true);
             // if (!walk2.isPlaying && !walk1.isPlaying) {
@@ -53,8 +51,7 @@ using System.Collections;
             animator.SetBool("Moving", false);
         }
 
-        if(GetComponent<Rigidbody2D>().velocity.y < -1) {
-            Debug.Log("falling");
+        if(GetComponent<Rigidbody2D>().velocity.y < 0) {
             animator.SetBool("Falling", true);
         } else {
             animator.SetBool("Falling", false);
@@ -68,7 +65,7 @@ using System.Collections;
         } 
 
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded) {
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.LeftControl)) && isGrounded) {
             jumping = true;
             animator.SetBool("Jumping", true);
             float jumpForce = Mathf.Sqrt(jumpHeight * jumpSpeed * (rb.gravityScale));
@@ -81,13 +78,29 @@ using System.Collections;
         }
 
         if (Input.GetMouseButtonDown(0)) {
-            if (hoveredOver) {
-                onRoot = true;
-                pivot.GetComponent<Transform>().position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                root.enable(transform.position, pivot.GetComponent<Transform>().position);
-                root.SetPivot(pivot);
-                pivot.GetComponent<DistanceJoint2D>().enabled = true;
+            Vector3 mouse = cam.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, mouse, 10f, layer.value);
+
+            // Debug.DrawRay(transform.position, mouse * 12f, Color.green);
+            // if(hitGround.collider.gameObject.CompareTag("Holds")) {
+            if (hit.collider != null) {
+                // if (hit.collider == GameObject.FindWithTag("Holds")) {
+                    onRoot = true;
+                    pivot.GetComponent<Transform>().position = hit.point;
+                    root.enable(transform.position, pivot.GetComponent<Transform>().position);
+                    root.SetPivot(pivot);
+                    pivot.GetComponent<DistanceJoint2D>().enabled = true;
+                // }
             }
+            // }
+
+            // if (hoveredOver) {
+            //     onRoot = true;
+            //     pivot.GetComponent<Transform>().position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //     root.enable(transform.position, pivot.GetComponent<Transform>().position);
+            //     root.SetPivot(pivot);
+            //     pivot.GetComponent<DistanceJoint2D>().enabled = true;
+            // }
         }
         if (Input.GetMouseButtonUp(0)) {
                 onRoot = false;
@@ -126,9 +139,11 @@ using System.Collections;
     }
 
     private void Start() {
+        cam = Camera.main;
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator.SetBool("Jumping", false);
         animator.SetBool("Moving", false);
+        animator.SetBool("Falling", false);
     }
 
     public void SetHovering(bool hovering) {
