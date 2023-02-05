@@ -53,6 +53,13 @@ using System.Collections;
             animator.SetBool("Moving", false);
         }
 
+        if(GetComponent<Rigidbody2D>().velocity.y < -1) {
+            Debug.Log("falling");
+            animator.SetBool("Falling", true);
+        } else {
+            animator.SetBool("Falling", false);
+        }
+
         if(Input.GetAxis("Horizontal") > 0) {
             spriteRenderer.flipX = false;
         } 
